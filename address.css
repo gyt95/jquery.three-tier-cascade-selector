@@ -1,0 +1,164 @@
+html {
+    /*隐藏滚动条，当IE下溢出，仍然可以滚动*/
+    -ms-overflow-style:none;
+    /*火狐下隐藏滚动条*/
+    overflow:-moz-scrollbars-none;
+}
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.ekt-container{
+    width: 850px;
+    height: 615px;
+}
+/* 前面加*是只 针对IE6/IE7有效，其他浏览器并不渲染这个属性 */
+.left-part{
+    width: 15%;
+    margin-right: 20px;
+    /* overflow-y: scroll;
+    height: 600px; */
+    position: relative;
+}
+.right-part{
+    width: 80%;
+    height: 600px;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px;
+    border: 1px solid #ccc;
+    *position: relative;    /* 避免overflow:hidden无效导致内部ul溢出 */
+    /* 哪个需要设置 overflow:hidden; 生效，就在哪个上面设置 position:relative; */
+}
+.left-part,
+.right-part{
+    display: inline-block;
+    vertical-align: middle;
+    *display: inline;
+    *zoom: 1;
+}
+.left-part ul{
+    overflow-y: scroll;
+    height: 540px;
+    margin-bottom: 50px;
+    overflow-x: hidden;
+    *position: relative;
+}
+/* Chrome下隐藏滚动条 */
+.left-part ul::-webkit-scrollbar,
+.right-part::-webkit-scrollbar{
+    display: none;
+}
+.left-part li,
+.right-part li{
+    position: relative;
+    background: #ccc;
+    margin-bottom: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+.left-part li{
+    display: block;
+    width: 100%;
+    *width: 80%;
+    height: 50px;
+    line-height: 50px;
+}
+.right-part li{
+    display: inline-block;
+    width: 23%;
+    margin: 5px;
+    height: 155px;
+    line-height: 155px;
+    *width: 22%;
+    *display: inline;
+    *zoom: 1;
+}
+/* 1、4、7 */
+/* .right-part li:nth-child(3n-2){ 
+    margin-left: 10px;
+} */
+/* 1、5、9 */
+.right-part li:nth-child(4n-3){  
+    margin-left: 10px;
+}
+.left-part li span,
+.right-part li span{
+    display: inline-block;
+    line-height: 24px;
+    height: auto;
+    vertical-align: middle;
+    cursor: default;
+    *display: inline;
+    *zoom: 1;
+}
+.left-part li span{
+    *height:50px;
+    *line-height: 50px;
+}
+.right-part li span{
+    *height:150px;
+    *line-height: 150px;
+}
+.left-part li:hover,
+.right-part li:hover{
+    /* background: #037ac3 !important; */
+    color: #fff;
+}
+.back-btn{
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    bottom: -10px;
+    text-align: center;
+}
+.back-btn span{
+    display: inline-block;
+    line-height: 24px;
+    height: auto;
+    vertical-align: middle;
+    cursor: default;
+}
+.back-btn:hover{
+    background: #037ac3;
+    color: #fff;
+}
+.btn-active{
+    color: #fff;
+    background: #037ac3 !important;
+}
+
+/* 小尺寸下 */
+.mini-container{
+    width: 500px;
+}
+.mini-lp{
+    margin-right: 10px;
+}
+.mini-lp ul{
+    font-size: 16px;
+}
+.mini-rp ul li{
+    width: 22%;
+    *width: 21%;
+    height: 80px;
+    line-height: 80px;
+}
+.mini-rp ul li span{
+    height: 80px;
+    line-height: 80px;
+}
+.mini-btn{
+    font-size: 14px;
+}
