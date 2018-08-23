@@ -8,12 +8,25 @@
     <link rel="stylesheet" href="./address.css">
 </head>
 <body>
-    <div class="ekt-container"></div>
+    <!-- <div class="ekt-container"></div> -->
+    <div>
+        <li class="inputWrap-start inputWrap-notBed">
+            <span class="star">*</span>
+            <span class="name">起点科室:</span>
+            <input type="text" class="input-start" readonly>
+        </li>
+        <li class="inputWrap-destination inputWrap-notBed">
+            <span class="name">目的地:</span>
+            <input type="text" class="input-destination"/>
+        </li>
+    </div>
+
+    <div class="ekt-container ekt-container-start" style="display:none"></div>
+    <div class="ekt-container ekt-container-destination" style="display:none"></div>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
     <script src="./address.js"></script>
     <script>
-        // 插件允许改变单列背景色、应该有fade效果
         // $.getJSON('./db.json', function(res){
         //     console.log(res.data)
 
@@ -498,18 +511,78 @@
             "success": true
         }
 
-        $('.ekt-container').picker({
-            data: res.data, // 传入的三层级联数据
-            multiple: true, // 是否多选
-            size: 'mini',   // 尺寸
-            // position: 'top',  // 定位位置，默认为default，可选：top/default
-            speed: 0,     // 动画速度，默认为0
-            backgroundColor: '#f2f2f2', // 选项背景色
-            callback: function(data){
-                console.log('返回地址全称成功!')
-                console.log(data)
+        // $('.ekt-container').picker({
+        //     data: res.data, // 传入的三层级联数据
+        //     multiple: true, // 是否多选
+        //     size: 'mini',   // 尺寸
+        //     // position: 'top',  // 定位位置，默认为default，可选：top/default
+        //     speed: 0,     // 动画速度，默认为0
+        //     backgroundColor: '#f2f2f2', // 选项背景色
+        //     callback: function(data){
+        //         console.log('返回地址全称成功!')
+        //         console.log(data)
+        //     }
+        // })
+
+        $(function(){
+            $('body').on('click', '.inputWrap-destination', setDestination)
+            $('body').on('click', '.inputWrap-start', clickToSetDefaultRoom)
+
+            function clickToSetDefaultRoom(){
+                if(!$('.ekt-container-destination').is(':hidden')){
+                    $('.ekt-container-destination').hide()
+                }
+                $('.ekt-container-start').show()
+
+                $('.ekt-container-start').picker({
+                    data: res.data, // 传入的三层级联数据
+                    multiple: false, // 是否多选
+                    size: 'mini',   // 尺寸
+                    // position: 'top',  // 定位位置，默认为default，可选：top/default
+                    speed: 0,     // 动画速度，默认为0
+                    backgroundColor: '#f2f2f2', // 选项背景色
+                    callback: function(data){
+                        console.log('返回地址全称成功!')
+                        console.log(data)
+
+                        var fullAddress = '';
+                        for(var i=0; i< data.length; i++){
+                            fullAddress = fullAddress + data[i] + ' '
+                        }
+                        $('.input-start').val(fullAddress)
+                    }
+                })
+            }
+            
+            function setDestination(){
+                if(!$('.ekt-container-start').is(':hidden')){
+                    $('.ekt-container-start').hide()
+                }
+                $('.ekt-container-destination').show()
+
+
+                $('.ekt-container-destination').picker({
+                    data: res.data, // 传入的三层级联数据
+                    multiple: true, // 是否多选
+                    size: 'mini',   // 尺寸
+                    // position: 'top',  // 定位位置，默认为default，可选：top/default
+                    speed: 500,     // 动画速度，默认为0
+                    backgroundColor: '#f2f2f2', // 选项背景色
+                    number: 1,
+                    callback: function(data){
+                        console.log('返回地址全称成功!')
+                        console.log(data)
+
+                        var fullAddress = '';
+                        for(var i=0; i< data.length; i++){
+                            fullAddress = fullAddress + data[i] + ' '
+                        }
+                        $('.input-destination').val(fullAddress)
+                    }
+                })
             }
         })
+        
     </script>
 </body>
 </html>

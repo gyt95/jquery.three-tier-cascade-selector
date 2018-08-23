@@ -20,6 +20,7 @@ ul{
 .ekt-container{
     width: 850px;
     height: 615px;
+    text-align: left
 }
 /* 前面加*是只 针对IE6/IE7有效，其他浏览器并不渲染这个属性 */
 .left-part{
@@ -43,6 +44,7 @@ ul{
 .right-part{
     display: inline-block;
     vertical-align: middle;
+    background: #fff;
     *display: inline;
     *zoom: 1;
 }
@@ -122,16 +124,18 @@ ul{
     position: absolute;
     bottom: -10px;
     text-align: center;
+    background: #cac9c9;
 }
 .back-btn span{
     display: inline-block;
     line-height: 24px;
+    *line-height: 50px;
     height: auto;
     vertical-align: middle;
     cursor: default;
 }
 .back-btn:hover{
-    background: #037ac3;
+    background: #037ac3 !important;
     color: #fff;
 }
 .btn-active{
@@ -154,11 +158,28 @@ ul{
     *width: 21%;
     height: 80px;
     line-height: 80px;
+    float:left;
+    *width:80px;
+    *height:80px;
+    *line-height:80px;
+    *margin: 5px;
+    *position: relative;
+    *display: inline;
+    *zoom: 1;
+}
+.mini-rp ul:after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
 }
 .mini-rp ul li span{
-    height: 80px;
-    line-height: 80px;
+    *display: block;
+    *width:auto !important;
+    *vertical-align:middle;
 }
 .mini-btn{
     font-size: 14px;
+    *height: 50px;
+    *line-height: 50px;
 }

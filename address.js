@@ -27,9 +27,12 @@
             s.thirdName = ''
             s.fullAddress = []     // 地址全称，如：['1号楼','3楼','A室']
             
+            s.sel.html('')
+            
             s.sel.append('<div class="left-part"><ul></ul></div>')
             s.sel.append('<div class="right-part"><ul></ul></div>')
-
+            console.log(s.sel)
+            console.log("what")
             // 将第一层地址存入ff
             for(var i = 0; i < this.settings.data.length; i++){
                 s.first_floor.push(this.settings.data[i].label)
@@ -46,22 +49,28 @@
         insertData: function(s){
             // 创建html模板
             this.insertLeftData(s)
-            $('.left-part ul li').eq(0).addClass('btn-active')
-            s.fullAddress[0] = $('.left-part ul li').eq(0).text()
+
+            console.log('高亮阿')
+            console.log(s.sel.find('.left-part ul li').eq(0))
+            console.log(s.sel.find('.left-part ul li'))
+            s.sel.find('.left-part ul li').eq(0).addClass('btn-active')
+            s.fullAddress[0] = s.sel.find('.left-part ul li').eq(0).text()
             this.insertRightData(s)
 
-            if(s.currFloor == 1) $('.left-part .back-btn').hide()
+            if(s.currFloor == 1) s.sel.find('.left-part .back-btn').hide()
         },
         bindClickEvent: function(s){
-            s.sel.on('click', '.left-part .back-btn', function(){
+            $('body').on('click', s.sel.selector + ' .left-part .back-btn', function(){
                 s.resetData(s)
             })
-            s.sel.on('click', '.left-part ul li', function(){
+            $('body').off('click', s.sel.selector + ' .left-part ul li')
+            $('body').on('click', s.sel.selector + ' .left-part ul li', function(){
                 if(s.currFloor == 2){
                     console.log('当前第二层')
+                    s.fullAddress.splice(2, s.fullAddress.length - 2)   // 左侧二层栏目切换时，先清空所有科室地址，避免多个二层地址的科室push在一起
 
                     for(var i = 0; i < s.first_floor.length; i++){  
-                        $(this).text() == s.first_floor[i] ? idx = i : $('.left-part ul li').eq(i).removeClass('btn-active')
+                        $(this).text() == s.first_floor[i] ? idx = i : s.sel.find('.left-part ul li').eq(i).removeClass('btn-active')
                     }
                     $(this).addClass('btn-active')
 
@@ -81,7 +90,7 @@
                     s.fullAddress.push($(this).text())
                     // 找出对应的索引，存入sf，清空原html，插入新的数据
                     for(var i = 0; i < s.first_floor.length; i++){  
-                        $(this).text() == s.first_floor[i] ? idx = i : $('.left-part ul li').eq(i).removeClass('btn-active')
+                        $(this).text() == s.first_floor[i] ? idx = i : s.sel.find('.left-part ul li').eq(i).removeClass('btn-active')
                     }
                     $(this).addClass('btn-active')
 
@@ -93,7 +102,9 @@
                     s.fullAddress[0] = $(this).text()
                 }
             })
-            s.sel.on('click', '.right-part ul li', function(){
+            $('body').off('click', s.sel.selector + ' .right-part ul li')
+            $('body').on('click', s.sel.selector + ' .right-part ul li', function(){
+                console.log('...')
                 console.log(s.currFloor)
                 if(s.currFloor == 2) {
                     if(s.settings.multiple){ 
@@ -104,7 +115,7 @@
                         for(var i = 0; i < s.second_floor.length; i++){ // 获取对应索引
                             if($(this).text() == s.second_floor[i]) idx = i
                         }
-                        $('.right-part ul li').eq(idx).addClass('btn-active')    // 选项高亮
+                        s.sel.find('.right-part ul li').eq(idx).addClass('btn-active')    // 选项高亮
                         
                         s.getFullAddress(s)
                     }else{
@@ -115,10 +126,12 @@
                 }else{
                     var idx = ''
                     
+                    console.log($(this).text())
                     for(var i = 0; i < s.second_floor.length; i++){ // 获取对应索引
+                        console.log(s.second_floor[i])
                         if($(this).text() == s.second_floor[i].label) idx = i
                     }
-                    console.log(idx)
+                    console.log('当前点击的索引是，',idx)
     
                     s.sel.find('.left-part ul').html('') // 清空左侧html和数据，并将右侧栏目内容存入左侧ff
                     s.first_floor = []
@@ -128,10 +141,11 @@
                     s.insertLeftData(s, 1)
                     
                     s.fullAddress[1] = $(this).text()   // 保存地址名
-                    $('.left-part ul li').eq(idx).addClass('btn-active')    // 选项高亮
+                    s.sel.find('.left-part ul li').eq(idx).addClass('btn-active')    // 选项高亮
 
                     s.tmpData = s.second_floor
                     s.sel.find('.right-part ul').html('') // 清空右侧，将第三层栏目内容存入右侧
+                    
                     for(var i = 0; i < s.second_floor[idx].children.length; i++){
                         s.third_floor.push(s.second_floor[idx].children[i])
                     }
@@ -145,9 +159,9 @@
             })
         },
         setScrollTop: function(s, idx){    // 左侧栏目定位到对应楼层的位置
-            var ulHeight = $('.left-part ul')[0].clientHeight - 55,
-                eHeight = $('.left-part ul li').eq(idx)[0].clientHeight,
-                eTop = $('.left-part ul li').eq(idx)[0].offsetTop,
+            var ulHeight = s.sel.find('.left-part ul')[0].clientHeight - 55,
+                eHeight = s.sel.find('.left-part ul li').eq(idx)[0].clientHeight,
+                eTop = s.sel.find('.left-part ul li').eq(idx)[0].offsetTop,
                 speed = s.settings.speed,
                 posi = s.settings.position
 
@@ -161,15 +175,15 @@
                     case 'top':
                         val = eTop;break;
                     default:
-                        val = eTop - (eHeight * 4 + 5 * 4 + eHeight/2 + 5);break;
+                        val = eTop - (eHeight * 4 + 5 * 4 + eHeight/2 + 5);break;   // 该选项距离顶部的高度 - 4个该选项高度 - 4个选项间隙5px - 半个选项，反正最后要在中间
                 }
-                $('.left-part ul').animate({
+                s.sel.find('.left-part ul').animate({
                     'scrollTop': val
                 }, speed)
             }
         },
         bindMouseEvent: function(s){
-            s.sel.on('mouseover mouseout', '.left-part ul li, .left-part .back-btn, .right-part ul li', function(){
+            s.sel.on('mouseover mouseout', '.left-part ul li, .right-part ul li', function(){
                 if(event.type == "mouseover"){      //鼠标悬浮
                     $(this).css('backgroundColor', s.settings.hoverColor)
                 }else if(event.type == "mouseout"){  //鼠标离开
@@ -208,7 +222,7 @@
                 }else{
                     s.sel.find('.left-part .back-btn').show()
                 }
-                s.sel.find('.left-part .back-btn').css('background', '#cac9c9').addClass('mini-btn')
+                s.sel.find('.left-part .back-btn').addClass('mini-btn')
             }
             if(s.settings.size == 'mini') this.addMiniClassName(s)
             this.addBackgroundColor(s)
@@ -226,13 +240,32 @@
             s.sel.find('.right-part').addClass('mini-rp')
         },
         addBackgroundColor: function(s){
-            $('.left-part ul li').css('backgroundColor', s.settings.backgroundColor)
-            $('.right-part ul li').css('backgroundColor', s.settings.backgroundColor)
+            s.sel.find('.left-part ul li').css('backgroundColor', s.settings.backgroundColor)
+            s.sel.find('.right-part ul li').css('backgroundColor', s.settings.backgroundColor)
         },
         getFullAddress: function(s){
-            s.settings.callback(s.fullAddress)
+            var result = []
+            // for(var i = 0; i < s.fullAddress.length; i++){  // IE7/8不兼容indexOf
+            //     if(result.indexOf(s.fullAddress[i]) == -1) result.push(s.fullAddress[i])
+            // }
+            result = s.unique(s.fullAddress)
+            s.settings.callback(result)
 
-            if(!s.settings.multiple) s.resetData(s)
+            if(!s.settings.multiple) s.resetData(s) // 当不为多选，重置界面和数据
+        },
+        unique: function (arr) {
+            var ret = []
+            var hash = {}
+        
+            for (var i = 0; i < arr.length; i++) {
+                var item = arr[i]
+                var key = typeof(item) + item
+                if (hash[key] !== 1) {
+                    ret.push(item)
+                    hash[key] = 1
+                }
+            }
+            return ret
         }
     }
 
@@ -254,3 +287,4 @@
 // 小结
 // 1.如何将插件中的变量或方法返回出去（加回调函数）
 // 2.如何用js修改hover样式（$().hover()方法)
+// 3.如何防止事件委托触发多次（$().off().on()，先解绑事件再重新绑定）
