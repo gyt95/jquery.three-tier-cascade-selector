@@ -17,20 +17,24 @@ ul{
     padding: 0;
     margin: 0;
 }
+li{
+    list-style: none;
+}
+input{
+    width: 300px;
+}
 .ekt-container{
     width: 850px;
     height: 615px;
-    text-align: left
+    text-align: left;
 }
 /* 前面加*是只 针对IE6/IE7有效，其他浏览器并不渲染这个属性 */
-.left-part{
+.ekt-container .left-part{
     width: 15%;
     margin-right: 20px;
-    /* overflow-y: scroll;
-    height: 600px; */
     position: relative;
 }
-.right-part{
+.ekt-container .right-part{
     width: 80%;
     height: 600px;
     overflow: hidden;
@@ -40,15 +44,15 @@ ul{
     *position: relative;    /* 避免overflow:hidden无效导致内部ul溢出 */
     /* 哪个需要设置 overflow:hidden; 生效，就在哪个上面设置 position:relative; */
 }
-.left-part,
-.right-part{
+.ekt-container .left-part,
+.ekt-container .right-part{
     display: inline-block;
     vertical-align: middle;
     background: #fff;
     *display: inline;
     *zoom: 1;
 }
-.left-part ul{
+.ekt-container .left-part ul{
     overflow-y: scroll;
     height: 540px;
     margin-bottom: 50px;
@@ -56,26 +60,26 @@ ul{
     *position: relative;
 }
 /* Chrome下隐藏滚动条 */
-.left-part ul::-webkit-scrollbar,
-.right-part::-webkit-scrollbar{
+.ekt-container .left-part ul::-webkit-scrollbar,
+.ekt-container .right-part::-webkit-scrollbar{
     display: none;
 }
-.left-part li,
-.right-part li{
+.ekt-container .left-part li,
+.ekt-container .right-part li{
     position: relative;
     background: #ccc;
     margin-bottom: 10px;
     text-align: center;
     vertical-align: middle;
 }
-.left-part li{
+.ekt-container .left-part li{
     display: block;
     width: 100%;
     *width: 80%;
     height: 50px;
     line-height: 50px;
 }
-.right-part li{
+.ekt-container .right-part li{
     display: inline-block;
     width: 23%;
     margin: 5px;
@@ -85,16 +89,11 @@ ul{
     *display: inline;
     *zoom: 1;
 }
-/* 1、4、7 */
-/* .right-part li:nth-child(3n-2){ 
-    margin-left: 10px;
-} */
-/* 1、5、9 */
-.right-part li:nth-child(4n-3){  
+.ekt-container .right-part li:nth-child(4n-3){  
     margin-left: 10px;
 }
-.left-part li span,
-.right-part li span{
+.ekt-container .left-part li span,
+.ekt-container .right-part li span{
     display: inline-block;
     line-height: 24px;
     height: auto;
@@ -103,20 +102,19 @@ ul{
     *display: inline;
     *zoom: 1;
 }
-.left-part li span{
+.ekt-container .left-part li span{
     *height:50px;
     *line-height: 50px;
 }
-.right-part li span{
+.ekt-container .right-part li span{
     *height:150px;
     *line-height: 150px;
 }
-.left-part li:hover,
-.right-part li:hover{
-    /* background: #037ac3 !important; */
+.ekt-container .left-part li:hover,
+.ekt-container .right-part li:hover{
     color: #fff;
 }
-.back-btn{
+.ekt-container .back-btn{
     display: block;
     width: 100%;
     height: 50px;
@@ -126,7 +124,7 @@ ul{
     text-align: center;
     background: #cac9c9;
 }
-.back-btn span{
+.ekt-container .back-btn span{
     display: inline-block;
     line-height: 24px;
     *line-height: 50px;
@@ -134,52 +132,43 @@ ul{
     vertical-align: middle;
     cursor: default;
 }
-.back-btn:hover{
-    background: #037ac3 !important;
+.ekt-container .back-btn:hover{
+    background: #037ac3;
     color: #fff;
 }
-.btn-active{
+.ekt-container .btn-active{
     color: #fff;
     background: #037ac3 !important;
 }
 
 /* 小尺寸下 */
 .mini-container{
-    width: 500px;
+    width: 550px;
 }
-.mini-lp{
+.mini-container .mini-lp{
     margin-right: 10px;
 }
-.mini-lp ul{
+.mini-container .mini-lp ul{
     font-size: 16px;
 }
-.mini-rp ul li{
+.mini-container .mini-rp ul li{
     width: 22%;
     *width: 21%;
     height: 80px;
     line-height: 80px;
-    float:left;
-    *width:80px;
-    *height:80px;
-    *line-height:80px;
-    *margin: 5px;
-    *position: relative;
-    *display: inline;
-    *zoom: 1;
 }
-.mini-rp ul:after {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
+.mini-container .mini-rp ul li span{
+    *height: 80px;
+    *line-height: 80px;
 }
-.mini-rp ul li span{
-    *display: block;
-    *width:auto !important;
-    *vertical-align:middle;
-}
-.mini-btn{
+.mini-container .mini-btn{
     font-size: 14px;
     *height: 50px;
     *line-height: 50px;
+}
+.mini-container .back-btn span{
+    display: inline-block;
+    height: auto;
+    vertical-align: middle;
+    cursor: default;
 }
