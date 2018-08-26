@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>三层级联选择</title>
+    <title>Three-tier-cascade-selector</title>
     <link rel="stylesheet" href="./address.css">
 </head>
 <body>
-    <!-- <div class="ekt-container"></div> -->
     <div>
         <li class="input-start">
-            <span class="name">起点科室:</span>
+            <span class="name">start:</span>
             <input type="text" class="input-start" readonly>
         </li>
         <li class="input-destination">
-            <span class="name">目的地:</span>
+            <span class="name">destination:</span>
             <input type="text" class="input-destination" readonly>
         </li>
     </div>
@@ -27,21 +26,7 @@
     <script src="./db.js"></script>
     <script src="./address.js"></script>
     <script>
-        // 用$.getJSON('./db.json', function(res){...}) 
-        // Chrome 浏览器会报错，禁止请求本地数据
-
-        // $('.ekt-container').picker({
-        //     data: res.data, // 传入的三层级联数据
-        //     multiple: true, // 是否多选
-        //     size: 'mini',   // 尺寸
-        //     // position: 'top',  // 定位位置，默认为default，可选：top/default
-        //     speed: 0,     // 动画速度，默认为0
-        //     backgroundColor: '#f2f2f2', // 选项背景色
-        //     callback: function(data){
-        //         console.log('返回地址全称成功!')
-        //         console.log(data)
-        //     }
-        // })
+        // $.getJSON('./db.json', function(res){...})  will error in Chrome browser
         console.log(res)
 
         $('body').on('click', '.input-destination', setDestination)
@@ -54,16 +39,11 @@
             $('.ekt-container-start').show()
 
             $('.ekt-container-start').picker({
-                data: res.data, // 传入的三层级联数据
-                multiple: false, // 是否多选
-                size: 'mini',   // 尺寸
-                // position: 'top',  // 定位位置，默认为default，可选：top/default
-                speed: 0,     // 动画速度，默认为0
-                backgroundColor: '#f2f2f2', // 选项背景色
+                data: res.data, 
+                multiple: false, 
+                speed: 0,     
+                backgroundColor: '#f2f2f2', 
                 callback: function(data){
-                    console.log('返回地址全称成功!')
-                    console.log(data)
-
                     var fullAddress = '';
                     for(var i=0; i< data.length; i++){
                         fullAddress = fullAddress + data[i] + ' '
@@ -80,17 +60,14 @@
             $('.ekt-container-destination').show()
 
             $('.ekt-container-destination').picker({
-                data: res.data, // 传入的三层级联数据
-                multiple: true, // 是否多选
-                size: 'mini',   // 尺寸
-                // position: 'top',  // 定位位置，默认为default，可选：top/default
-                speed: 500,     // 动画速度，默认为0
-                backgroundColor: '#f2f2f2', // 选项背景色
-                number: 1,
+                data: res.data,                     // the three-tier-cascade data
+                multiple: true,                     // whether to select multiple item in the third floor
+                size: 'mini',                       // size of the selector
+                position: 'top',                    // ths position of the scrollbar in the second floor, top or default
+                speed: 500,                         // the speed of the scrollbar when scrolling
+                backgroundColor: '#f2f2f2',         // all options background color
+                backBtnText: 'go back',             // text of return button
                 callback: function(data){
-                    console.log('返回地址全称成功!')
-                    console.log(data)
-
                     var fullAddress = '';
                     for(var i=0; i< data.length; i++){
                         fullAddress = fullAddress + data[i] + ' '
