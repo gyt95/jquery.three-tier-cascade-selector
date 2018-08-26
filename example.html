@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Three-tier-cascade-selector</title>
-    <link rel="stylesheet" href="./address.css">
+    <link rel="stylesheet" href="./cascade.css">
 </head>
 <body>
     <div>
@@ -19,26 +19,26 @@
         </li>
     </div>
 
-    <div class="ekt-container ekt-container-start"></div>
-    <div class="ekt-container ekt-container-destination"></div>
+    <div class="cas-container cas-container-start"></div>
+    <div class="cas-container cas-container-destination"></div>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
     <script src="./db.js"></script>
-    <script src="./address.js"></script>
+    <script src="./cascade.js"></script>
     <script>
         // $.getJSON('./db.json', function(res){...})  will error in Chrome browser
         console.log(res)
 
         $('body').on('click', '.input-destination', setDestination)
-        $('body').on('click', '.input-start', clickToSetDefaultRoom)
+        $('body').on('click', '.input-start', setStart)
 
-        function clickToSetDefaultRoom(){
-            if(!$('.ekt-container-destination').is(':hidden')){
-                $('.ekt-container-destination').hide()
+        function setStart(){
+            if(!$('.cas-container-destination').is(':hidden')){
+                $('.cas-container-destination').hide()
             }
-            $('.ekt-container-start').show()
+            $('.cas-container-start').show()
 
-            $('.ekt-container-start').picker({
+            $('.cas-container-start').cascader({
                 data: res.data, 
                 multiple: false, 
                 speed: 0,     
@@ -54,12 +54,12 @@
         }
         
         function setDestination(){
-            if(!$('.ekt-container-start').is(':hidden')){
-                $('.ekt-container-start').hide()
+            if(!$('.cas-container-start').is(':hidden')){
+                $('.cas-container-start').hide()
             }
-            $('.ekt-container-destination').show()
+            $('.cas-container-destination').show()
 
-            $('.ekt-container-destination').picker({
+            $('.cas-container-destination').cascader({
                 data: res.data,                     // the three-tier-cascade data
                 multiple: true,                     // whether to select multiple item in the third floor
                 size: 'mini',                       // size of the selector

@@ -7,21 +7,21 @@
 
 ## Usage
 ```html
-<input type="text" class="input-start">
-<div class="ekt-container"></div>
+<input type="text" class="test">
+<div class="cas-container"></div>
 
-<link rel="stylesheet" href="./csPicker.css">
-<script src="./csPicker.js"></script>
+<link rel="stylesheet" href="./cascade.css">
+<script src="./cascade.min.js"></script>
 
 <script>
-$('.ekt-container').picker({
+$('.cas-container').cascader({
       data: res.data, 
       callback: function(data){
           var fullAddress = '';
           for(var i=0; i< data.length; i++){
               fullAddress = fullAddress + data[i] + ' '
           }
-          $('.input-start').val(fullAddress)
+          $('.test').val(fullAddress)
       }
   })
 </script>
@@ -36,6 +36,7 @@ $('.ekt-container').picker({
 |position         |	left scrollbar position, can be one of `top` `default`      	| 	  string	    |      default      |   
 |speed		        | left scrollbar scrolling speed			                          | 	  number	    |         0         |
 |backgroundColor	| customized background color of options		                    | 	  string	    |      '#ccc'       |    
+|backBtnText	| customized text of return	button	                    | 	  string	    |      'back'       |    
 |size		          | size. can be one of `large` `small`	 				                  | 	  string	    |      large        |
 |callback	        |	callback when finishing cascader select				                | function(data)  |         -         |
 

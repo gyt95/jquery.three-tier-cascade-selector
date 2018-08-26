@@ -240,7 +240,7 @@
         }
     }
 
-    $.fn.picker = function(opts){
+    $.fn.cascader = function(opts){
         new Selector($(this), opts)
     }
 

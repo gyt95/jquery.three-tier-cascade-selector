@@ -1,7 +1,5 @@
 html {
-    /*隐藏滚动条，当IE下溢出，仍然可以滚动*/
     -ms-overflow-style:none;
-    /*火狐下隐藏滚动条*/
     overflow:-moz-scrollbars-none;
 }
 body{
@@ -23,63 +21,61 @@ li{
 input{
     width: 300px;
 }
-.ekt-container{
+.cas-container{
     width: 850px;
     height: 615px;
     text-align: left;
+    display: none;
 }
-/* 前面加*是只 针对IE6/IE7有效，其他浏览器并不渲染这个属性 */
-.ekt-container .left-part{
+.cas-container .left-part{
     width: 15%;
     margin-right: 20px;
     position: relative;
 }
-.ekt-container .right-part{
+.cas-container .right-part{
     width: 80%;
     height: 600px;
     overflow: hidden;
     overflow-y: scroll;
     padding: 5px;
     border: 1px solid #ccc;
-    *position: relative;    /* 避免overflow:hidden无效导致内部ul溢出 */
-    /* 哪个需要设置 overflow:hidden; 生效，就在哪个上面设置 position:relative; */
+    *position: relative;   
 }
-.ekt-container .left-part,
-.ekt-container .right-part{
+.cas-container .left-part,
+.cas-container .right-part{
     display: inline-block;
     vertical-align: middle;
     background: #fff;
     *display: inline;
     *zoom: 1;
 }
-.ekt-container .left-part ul{
+.cas-container .left-part ul{
     overflow-y: scroll;
     height: 540px;
     margin-bottom: 50px;
     overflow-x: hidden;
     *position: relative;
 }
-/* Chrome下隐藏滚动条 */
-.ekt-container .left-part ul::-webkit-scrollbar,
-.ekt-container .right-part::-webkit-scrollbar{
+.cas-container .left-part ul::-webkit-scrollbar,
+.cas-container .right-part::-webkit-scrollbar{
     display: none;
 }
-.ekt-container .left-part li,
-.ekt-container .right-part li{
+.cas-container .left-part li,
+.cas-container .right-part li{
     position: relative;
     background: #ccc;
     margin-bottom: 10px;
     text-align: center;
     vertical-align: middle;
 }
-.ekt-container .left-part li{
+.cas-container .left-part li{
     display: block;
     width: 100%;
     *width: 80%;
     height: 50px;
     line-height: 50px;
 }
-.ekt-container .right-part li{
+.cas-container .right-part li{
     display: inline-block;
     width: 23%;
     margin: 5px;
@@ -89,11 +85,11 @@ input{
     *display: inline;
     *zoom: 1;
 }
-.ekt-container .right-part li:nth-child(4n-3){  
+.cas-container .right-part li:nth-child(4n-3){  
     margin-left: 10px;
 }
-.ekt-container .left-part li span,
-.ekt-container .right-part li span{
+.cas-container .left-part li span,
+.cas-container .right-part li span{
     display: inline-block;
     line-height: 24px;
     height: auto;
@@ -102,19 +98,19 @@ input{
     *display: inline;
     *zoom: 1;
 }
-.ekt-container .left-part li span{
+.cas-container .left-part li span{
     *height:50px;
     *line-height: 50px;
 }
-.ekt-container .right-part li span{
+.cas-container .right-part li span{
     *height:150px;
     *line-height: 150px;
 }
-.ekt-container .left-part li:hover,
-.ekt-container .right-part li:hover{
+.cas-container .left-part li:hover,
+.cas-container .right-part li:hover{
     color: #fff;
 }
-.ekt-container .back-btn{
+.cas-container .back-btn{
     display: block;
     width: 100%;
     height: 50px;
@@ -124,7 +120,7 @@ input{
     text-align: center;
     background: #cac9c9;
 }
-.ekt-container .back-btn span{
+.cas-container .back-btn span{
     display: inline-block;
     line-height: 24px;
     *line-height: 50px;
@@ -132,16 +128,16 @@ input{
     vertical-align: middle;
     cursor: default;
 }
-.ekt-container .back-btn:hover{
+.cas-container .back-btn:hover{
     background: #037ac3;
     color: #fff;
 }
-.ekt-container .btn-active{
+.cas-container .btn-active{
     color: #fff;
     background: #037ac3 !important;
 }
 
-/* 小尺寸下 */
+/* mini size */
 .mini-container{
     width: 550px;
 }
