@@ -18,43 +18,44 @@
     Selector.prototype = {
         init: function(){
             console.log('get data successfully!')
-            var s = this;
-
-            s.first_floor = []
-            s.second_floor = []
-            s.third_floor = []
-            s.currFloor = 1
-            s.tmpData = []          // To save the second floor data 
-            s.fullAddress = []     // The full name of address, like: ['Building A', '3rd Floor', 'Room No.1001']
+            var s = this;  
             
             s.sel.html('')
-            
             s.sel.append('<div class="left-part"><ul></ul></div>')
             s.sel.append('<div class="right-part"><ul></ul></div>')
-            
-            for(var i = 0; i < this.settings.data.length; i++){    
-                s.first_floor.push(this.settings.data[i].label)
-            }
-            
-            s.second_floor = this.settings.data[0].children  
 
+            s.initData(s)
             s.insertData(s)
 
             s.bindClickEvent(s)
             s.bindMouseEvent(s)
         },
+        initData: function(s){
+            s.currFloor = 1
+            s.first_floor = []
+            s.second_floor = []
+            s.third_floor = []
+            s.tmpData = []          // To save the second floor data 
+            s.fullAddress = []      // The full name of address, like: ['Building A', '3rd Floor', 'Room No.1001']
+
+            for(var i = 0; i < s.settings.data.length; i++){ 
+                s.first_floor.push(s.settings.data[i].label)
+            }
+            
+            s.second_floor = s.settings.data[0].children
+        },
         insertData: function(s){  
-            this.insertLeftData(s)
+            s.insertLeftData(s)
 
             s.sel.find('.left-part ul li').eq(0).addClass('btn-active')
             s.fullAddress[0] = s.sel.find('.left-part ul li').eq(0).text()
-            this.insertRightData(s)
+            s.insertRightData(s)
 
             if(s.currFloor == 1) s.sel.find('.left-part .back-btn').hide()
         },
         bindClickEvent: function(s){
             $(s.sel.selector).off('click', '.left-part ul li').on('click', '.left-part ul li', function(){
-                s.sel.find('.left-part ul li').removeClass('btn-active')
+                $(this).siblings('li').removeClass('btn-active')
                 $(this).addClass('btn-active')
                 
                 if(s.currFloor == 2){
@@ -105,14 +106,11 @@
                     }
                 }else{
                     var idx = ''
-                    
-                    for(var i = 0; i < s.second_floor.length; i++){
-                        if($(this).text() == s.second_floor[i].label) idx = i
-                    }
     
                     s.sel.find('.left-part ul').html('') 
                     s.first_floor = []
                     for(var i = 0; i < s.second_floor.length; i++){
+                        if($(this).text() == s.second_floor[i].label) idx = i
                         s.first_floor.push(s.second_floor[i].label)
                     }
                     s.insertLeftData(s, 1)
@@ -161,25 +159,16 @@
         bindMouseEvent: function(s){
             s.sel.on('mouseover mouseout', '.left-part ul li, .right-part ul li', function(){
                 if(event.type == "mouseover"){      
+                    $(this).css('color', '#fff')
                     $(this).css('backgroundColor', s.settings.hoverColor)
                 }else if(event.type == "mouseout"){ 
+                    $(this).css('color', '#000')
                     $(this).css('backgroundColor', s.settings.backgroundColor)
                 }
             })
         },
         resetData: function(s){     // Reset all data, empty html
-            s.currFloor = 1
-            s.second_floor = []
-            s.first_floor = []
-            s.third_floor = []
-            s.tmpData = []
-            s.fullAddress = []
-            
-            for(var i = 0; i < s.settings.data.length; i++){   
-                s.first_floor.push(s.settings.data[i].label)
-            }
-            
-            s.second_floor = s.settings.data[0].children
+            s.initData(s)
             
             s.sel.find('.left-part ul').html('')
             s.sel.find('.right-part ul').html('')
@@ -187,31 +176,35 @@
             s.insertData(s)
         },
         insertLeftData: function(s, num){      // Insert data into the left column
+            var str = ''
             for(var i = 0; i < s.first_floor.length; i++){
-                s.sel.find('.left-part ul').append('<li><span>' + s.first_floor[i] +'</span></li>')
+                str = str + '<li><span>' + s.first_floor[i] + '</span></li>'
             }
+            s.sel.find('.left-part ul').append(str)
             if(num == 1){   // 1: Need to show the return button 
                 if(s.sel.find('.left-part .back-btn').length == 0) { 
                     s.sel.find('.left-part').append('<div class="back-btn"><span>'+ s.settings.backBtnText +'</span></div>')
                 }else{
                     s.sel.find('.left-part .back-btn').show()
                 }
-                s.sel.find('.left-part .back-btn').addClass('mini-btn')
+                s.sel.find('.left-part .back-btn').addClass(s.settings.size + '-btn')
             }
-            if(s.settings.size == 'mini') this.addMiniClassName(s)
-            this.addBackgroundColor(s)
+            if(s.settings.size == 'mini') s.addExtraClassName(s)
+            s.addBackgroundColor(s)
         },
         insertRightData: function(s, num){     // Insert data into the right column
+            var str = ''
             for(var i = 0; i < s.second_floor.length; i++){
                 var address = num == 1 ? s.second_floor[i] : s.second_floor[i].label
-                s.sel.find('.right-part ul').append('<li><span>' + address +'</span></li>')
+                str = str + '<li><span>' + address + '</span></li>'
             }
-            this.addBackgroundColor(s)
+            s.sel.find('.right-part ul').append(str)
+            s.addBackgroundColor(s)
         },
-        addMiniClassName: function(s){
-            s.sel.addClass('mini-container')
-            s.sel.find('.left-part').addClass('mini-lp')
-            s.sel.find('.right-part').addClass('mini-rp')
+        addExtraClassName: function(s){
+            s.sel.addClass(s.settings.size + '-container')
+            s.sel.find('.left-part').addClass(s.settings.size + '-lp')
+            s.sel.find('.right-part').addClass(s.settings.size + '-rp')
         },
         addBackgroundColor: function(s){
             s.sel.find('.left-part ul li').css('backgroundColor', s.settings.backgroundColor)
