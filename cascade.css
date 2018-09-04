@@ -129,7 +129,7 @@ input{
     color: #fff;
 }
 .cas-container .btn-active{
-    color: #fff;
+    color: #fff !important;
     background: #037ac3 !important;
 }
 
