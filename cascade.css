@@ -26,6 +26,7 @@ input{
     height: 615px;
     text-align: left;
     display: none;
+    background: #fff;
 }
 .cas-container .left-part{
     width: 15%;
@@ -56,10 +57,10 @@ input{
     overflow-x: hidden;
     *position: relative;
 }
-.cas-container .left-part ul::-webkit-scrollbar,
+/* .cas-container .left-part ul::-webkit-scrollbar,
 .cas-container .right-part::-webkit-scrollbar{
     display: none;
-}
+} */
 .cas-container .left-part li,
 .cas-container .right-part li{
     position: relative;
@@ -97,6 +98,10 @@ input{
     cursor: default;
     *display: inline;
     *zoom: 1;
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap !important;
 }
 .cas-container .left-part li span{
     *height:50px;

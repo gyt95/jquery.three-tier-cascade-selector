@@ -55,6 +55,7 @@
         },
         bindClickEvent: function(s){
             $(s.sel.selector).off('click', '.left-part ul li').on('click', '.left-part ul li', function(){
+                s.stopPropagation();
                 $(this).siblings('li').removeClass('btn-active')
                 $(this).addClass('btn-active')
                 
@@ -87,6 +88,7 @@
                 }
             })
             $(s.sel.selector).off('click', '.right-part ul li').on('click', '.right-part ul li', function(){
+                s.stopPropagation();
                 if(s.currFloor == 2) {
                     if(s.settings.multiple){ 
                         s.fullAddress.push($(this).text())
@@ -216,6 +218,13 @@
             s.settings.callback(result)
 
             if(!s.settings.multiple) s.resetData(s)
+        },
+        stopPropagation: function(){
+            if (event.stopPropagation) { // 针对 Mozilla 和 Opera 
+                event.stopPropagation(); 
+            } else if (window.event) { // 针对 IE 
+                window.event.cancelBubble = true; 
+            } 
         },
         unique: function (arr) {
             var ret = []
